@@ -1,5 +1,4 @@
-import { Hono } from 'hono'
-import { env } from 'hono/adapter'
+// import { Hono } from 'hono'
 // import { z } from 'zod'
 // import { zValidator } from '@hono/zod-validator'
 
@@ -8,12 +7,4 @@ import { env } from 'hono/adapter'
 //     title: z.string(),
 // })
   
-const Env = new Hono()
-  .get('/', (c) => {
-    const { VITE_TEST } = env(c)
-    return c.json({
-      env: VITE_TEST
-    })
-  })
-
-export default Env
+// const translator = new Hono()
