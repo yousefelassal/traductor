@@ -19,7 +19,7 @@ const Todos = () => {
     queryFn: async () => {
       const res = await client.api.todo.$get()
       return await res.json()
-    },
+    }
   })
 
   const $post = client.api.todo.$post
