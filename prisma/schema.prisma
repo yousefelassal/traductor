@@ -21,3 +21,8 @@ model User {
   passwordHash  String  @db.VarChar(255)
   translations  Translation[]
 }
+
+model Test {
+  id  String  @id
+  title String
+}
