@@ -3,7 +3,7 @@ import { AppType } from '../functions/api/[[route]]'
 import { hc, InferResponseType, InferRequestType } from 'hono/client'
 
 const queryClient = new QueryClient()
-const client = hc<AppType>('/api')
+const client = hc<AppType>('/')
 
 export default function App() {
   return (
@@ -14,7 +14,7 @@ export default function App() {
 }
 
 const Todos = () => {
-  const query = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['todos'],
     queryFn: async () => {
       const res = await client.api.todo.$get()
@@ -28,22 +28,24 @@ const Todos = () => {
     InferResponseType<typeof $post>,
     Error,
     InferRequestType<typeof $post>['form']
-  >(
-    async (todo) => {
+  >({
+    mutationFn: async (todo) => {
       const res = await $post({
         form: todo,
       })
       return await res.json()
     },
-    {
-      onSuccess: async () => {
-        queryClient.invalidateQueries({ queryKey: ['todos'] })
-      },
-      onError: (error:any) => { // eslint-disable-line
-        console.log(error)
-      },
-    }
-  )
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ['todos'] })
+    },
+    onError: (error) => {
+      console.log(error)
+    },
+  })
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div>
@@ -59,7 +61,7 @@ const Todos = () => {
       </button>
 
       <ul>
-        {query.data?.todos.map((todo) => (
+        {data?.todos.map((todo) => (
           <li key={todo.id}>{todo.title}</li>
         ))}
       </ul>
