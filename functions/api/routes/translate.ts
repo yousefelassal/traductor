@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import { env } from 'hono/adapter'
 // import { z } from 'zod'
 // import { zValidator } from '@hono/zod-validator'
 
@@ -8,11 +9,11 @@ import { Hono } from 'hono'
 // })
   
 const Env = new Hono()
-.get('/', (c) => {
-    const TEST = process.env.TEST
+  .get('/', (c) => {
+    const { VITE_TEST } = env(c)
     return c.json({
-        env: TEST
+      env: VITE_TEST
     })
-})
+  })
 
 export default Env
