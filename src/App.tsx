@@ -48,8 +48,9 @@ const Todos = () => {
   }
 
   return (
-    <div>
+    <div className="container mx-auto py-12 flex flex-col gap-2 items-center">
       <button
+        className="rounded-md px-2 py-1 border bg-black/10"
         onClick={() => {
           mutation.mutate({
             id: Date.now().toString(),
@@ -60,7 +61,7 @@ const Todos = () => {
         Add Todo
       </button>
 
-      <ul>
+      <ul className="list-disc">
         {data?.todos.map((todo) => (
           <li key={todo.id}>{todo.title}</li>
         ))}
