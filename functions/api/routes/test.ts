@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { z } from 'zod'
 import { zValidator } from '@hono/zod-validator'
+import { env } from 'hono/adapter'
 
 const schema = z.object({
     id: z.string(),
@@ -22,6 +23,14 @@ const test = new Hono()
   .get('/', (c) => {
     return c.json({
         todos
+    })
+  })
+
+export const Env = new Hono()
+  .get('/', (c) => {
+    const { VITE_TEST } = env(c) || import.meta.env.VITE_TEST
+    return c.json({
+      env: VITE_TEST
     })
   })
 
