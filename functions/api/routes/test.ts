@@ -26,9 +26,9 @@ const test = new Hono()
 
 export const Env = new Hono()
   .get('/', (c) => {
-    const { VITE_TEST } = env(c) || import.meta.env.VITE_TEST
+    const { TEST } = env(c) 
     return c.json({
-      env: VITE_TEST
+      env: TEST
     })
   })
 
