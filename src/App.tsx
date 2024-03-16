@@ -24,6 +24,8 @@ const Todos = () => {
 
   const $post = client.api.todo.$post
 
+  console.log(import.meta.env.VITE_TEST)
+
   const mutation = useMutation<
     InferResponseType<typeof $post>,
     Error,
