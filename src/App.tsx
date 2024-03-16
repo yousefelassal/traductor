@@ -23,9 +23,25 @@ const Todos = () => {
   })
 
   const $post = client.api.todo.$post
-
-  console.log(import.meta.env.VITE_TEST)
-
+  
+  const $postTranslate = client.api.translate.$post
+  
+  const translateMutation = useMutation<
+    InferResponseType<typeof $postTranslate>,
+    Error,
+    InferRequestType<typeof $postTranslate>['form']
+  >({
+    mutationFn: async (text) => {
+      const res = await $postTranslate({
+        form: text
+      })
+      return await res.json()
+    },
+    onSuccess(data) {
+        console.log(data)
+    },
+  })
+  
   const mutation = useMutation<
     InferResponseType<typeof $post>,
     Error,
@@ -61,6 +77,17 @@ const Todos = () => {
         }}
       >
         Add Todo
+      </button>
+      
+      <button
+        className="rounded-md px-2 py-1 border bg-black/10"
+        onClick={() => {
+          translateMutation.mutate({
+            text: 'Hello world'
+          })
+        }}
+      >
+        Send translation
       </button>
 
       <ul className="list-disc">
