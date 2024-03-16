@@ -29,7 +29,8 @@ const translator = new Hono()
     });
     const data = await response.json();
     return c.json({
-        translation: data
+        lang: data[0].detectedLanguage.language,
+        translation: data[0].translations[0].text
     })
 })
 
