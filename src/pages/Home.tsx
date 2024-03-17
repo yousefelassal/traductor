@@ -66,7 +66,7 @@ const Home = () => {
     onSuccess(data) {
       addTranslation(data)
       setCurrentTranslation(data)
-      reset()
+      reset( { text: '' } )
       ttsMutation.mutate({
         text: data.translation,
         lang: data.to_lang
@@ -104,11 +104,12 @@ const Home = () => {
         >
           <option value="es">Spanish</option>
           <option value="en">English</option>
+          <option value="ru">Russian</option>
+          <option value="ar">Arabic</option>
           <option value="fr">French</option>
           <option value="it">Italian</option>
           <option value="de">German</option>
           <option value="pt">Portuguese</option>
-          <option value="zh">Chinese</option>
           <option value="ja">Japanese</option>
           <option value="ko">Korean</option>
         </select>
