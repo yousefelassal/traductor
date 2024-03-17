@@ -103,7 +103,7 @@ const TypingForm = () => {
                 {isSubmitting ? "Translating..." : "Translate"}
             </button>
         </div>
-        <div className="fixed top-0 left-60 z-40 bg-gradient-to-tr from-slate-300/30 via-gray-400/30 to-slate-600/30 backdrop-blur-md border-slate-100/30 border py-2 flex inset-x-0 gap-2">
+        <div className="fixed top-2 left-64 right-4 rounded-md px-2 z-40 bg-gradient-to-tr from-slate-300/30 via-gray-400/30 to-slate-600/30 backdrop-blur-md border-slate-100/30 border py-2 flex inset-x-0 gap-2">
             <select
             {...register("lang", { required: true })}
             className="rounded-md border shadow px-2 py-1 border-black/10"
