@@ -1,8 +1,9 @@
 import { create } from 'zustand'
 
 type translation = {
-    lang: string,
+    from_lang: string
     translation: string
+    to_lang: string
 }
 
 type translationStore = {
@@ -14,7 +15,7 @@ type translationStore = {
 
 export const useTranslationStore = create<translationStore>((set) => ({
     allTranslations: [],
-    currentTranslation: { lang: '', translation: '' },
+    currentTranslation: { from_lang: '', translation: '', to_lang: ''},
     addTranslation: (translation) => set((state) => ({ allTranslations: [...state.allTranslations, translation] })),
     setCurrentTranslation: (translation) => set(() => ({ currentTranslation: translation }))
 }))
