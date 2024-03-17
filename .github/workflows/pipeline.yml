@@ -1,0 +1,34 @@
+name: Deployment pipeline
+
+on:
+    push:
+        branches:
+        - main
+
+jobs:
+    deployment_pipeline:
+        runs-on: ubuntu-20.04
+        steps:
+            - uses: actions/checkout@v4
+            - name: Trigger deployment
+              env:
+                deploy_hook: ${{ secrets.DEPLOY_HOOK }}
+              if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ''), '#skip') }}
+              run: |
+                curl "$deploy_url"
+    
+    tag_release:
+        needs: [deployment_pipeline]
+        runs-on: ubuntu-20.04
+        permissions:
+            contents: write
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
+            - name: Bumb version and push tag
+              if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ''), '#skip')}}
+              env: 
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                DEFAULT_BUMP: 'patch'
+              uses: anothrNick/github-tag-action@1.67.0
