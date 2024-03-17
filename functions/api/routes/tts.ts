@@ -3,7 +3,6 @@ import { Hono } from 'hono'
 import { z } from 'zod'
 import { zValidator } from '@hono/zod-validator'
 import { env } from 'hono/adapter'
-import { PassThrough } from 'node:stream'
 
 const schema = z.object({
     text: z.string(),
@@ -22,10 +21,7 @@ const tts = new Hono()
         synthesizer.speakTextAsync(text, (result) => {
             const { audioData } = result
             synthesizer.close()
-
-            const bufferStream = new PassThrough()
-            bufferStream.end(Buffer.from(audioData))
-            resolve(bufferStream)
+            resolve(audioData)
         }, (err) => {
             console.log(err)
             synthesizer.close()
@@ -36,7 +32,7 @@ const tts = new Hono()
         headers: {
             'Content-Type': 'audio/mpeg',
             'Content-Disposition': 'inline; filename="tts.mp3"'
-            }
+        }
     })
     return response
 })
