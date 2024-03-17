@@ -95,10 +95,10 @@ const Home = () => {
   }
 
   return (
-    <div className="container mx-auto py-12 flex flex-col gap-2 items-center">
+    <div className="relative min-h-screen container mx-auto py-12 flex flex-col gap-2 items-center">
       <h1 className="text-3xl font-bold">{currentTranslation?.translation} </h1>
       
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
+      <form onSubmit={handleSubmit(onSubmit)} className="fixed z-40 bg-gradient-to-tr from-slate-300/30 via-gray-400/30 to-slate-600/30 backdrop-blur-md rounded-lg border-slate-100/30 border px-4 lg:px-12 py-2 inset-x-0 bottom-0 flex flex-col gap-2">
         <input
           type="text"
           {...register("text", { required: true })}
@@ -132,7 +132,7 @@ const Home = () => {
 
       <div
         ref={animationParent}
-        className="flex flex-col gap-1"
+        className="flex flex-col gap-1 mb-24"
       >
         {allTranslations.map((translation) => (
           <div key={translation.id} className="rounded-md border shadow-md">
