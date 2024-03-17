@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 import { client } from '../libs/utils'
 import { useForm, SubmitHandler } from "react-hook-form"
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { v4 as uuidv4 } from 'uuid'
 
 type Input = {
   text: string | File
@@ -63,19 +64,16 @@ const Home = () => {
       },{
         onSuccess: (dataTts) => {
           const url = URL.createObjectURL(dataTts as Blob)
-          addTranslation({
-            from_lang: data.from_lang,
-            to_lang: data.to_lang,
-            translation: data.translation,
-            audioUrl: url
-          })
-          setCurrentTranslation({
-            from_lang: data.from_lang,
-            to_lang: data.to_lang,
-            translation: data.translation,
-            audioUrl: url
-          })
           const audio = new Audio(url)
+          const translation = {
+            id: uuidv4().toString(),
+            from_lang: data.from_lang,
+            to_lang: data.to_lang,
+            translation: data.translation,
+            audio: audio
+          }
+          addTranslation(translation)
+          setCurrentTranslation(translation)
           audio.currentTime = 0
           audio.onended = () => setCurrentTranslation(null)
           audio.play()
@@ -141,18 +139,31 @@ const Home = () => {
             <p>from: {convertLangCode(translation.from_lang)}</p>
             <p>to: {convertLangCode(translation.to_lang)}</p>
             <p>{translation.translation}</p>
-            <button
-              onClick={() => {
-                setCurrentTranslation(translation)
-                const audio = new Audio(translation.audioUrl)
-                audio.onended = () => setCurrentTranslation(null)
-                audio.currentTime = 0
-                audio.play()
-              }}
-              className="rounded-md border shadow px-2 py-1 bg-black/10 hover:bg-black/20 transition-colors duration-200"
-            >
-              Play
-            </button>
+            {currentTranslation?.id === translation.id ? (
+              <button
+                onClick={() => {
+                  setCurrentTranslation(null)
+                  translation.audio.pause()
+                }}
+                className="rounded-md border shadow px-2 py-1 bg-black/10 hover:bg-black/20 transition-colors duration-200"
+              >
+                Stop
+              </button>
+            )
+            : 
+            (
+              <button
+                onClick={() => {
+                  setCurrentTranslation(translation)
+                  translation.audio.currentTime = 0
+                  translation.audio.onended = () => setCurrentTranslation(null)
+                  translation.audio.play()
+                }}
+                className="rounded-md border shadow px-2 py-1 bg-black/10 hover:bg-black/20 transition-colors duration-200"
+              >
+                Play
+              </button>
+            )}
           </div>
         ))}
       </div>
