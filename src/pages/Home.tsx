@@ -39,15 +39,7 @@ const Home = () => {
         form: text
       })
       return await res.blob()
-    },
-    onSuccess(data) {
-      console.log(data)
-      const url = URL.createObjectURL(data as Blob)
-      const audio = new Audio(url)
-      console.log(audio)
-      audio.currentTime = 0
-      audio.play()
-    },
+    }
   })
   
   const $post = client.api.translate.$post
@@ -64,12 +56,30 @@ const Home = () => {
       return await res.json()
     },
     onSuccess(data) {
-      addTranslation(data)
-      setCurrentTranslation(data)
       reset( { text: '' } )
       ttsMutation.mutate({
         text: data.translation,
         lang: data.to_lang
+      },{
+        onSuccess: (dataTts) => {
+          const url = URL.createObjectURL(dataTts as Blob)
+          addTranslation({
+            from_lang: data.from_lang,
+            to_lang: data.to_lang,
+            translation: data.translation,
+            audioUrl: url
+          })
+          setCurrentTranslation({
+            from_lang: data.from_lang,
+            to_lang: data.to_lang,
+            translation: data.translation,
+            audioUrl: url
+          })
+          const audio = new Audio(url)
+          audio.currentTime = 0
+          audio.onended = () => setCurrentTranslation(null)
+          audio.play()
+        }
       })
     },
   })
@@ -88,7 +98,7 @@ const Home = () => {
 
   return (
     <div className="container mx-auto py-12 flex flex-col gap-2 items-center">
-      <h1 className="text-3xl font-bold">Current Translation: {currentTranslation.translation} </h1>
+      <h1 className="text-3xl font-bold">{currentTranslation?.translation} </h1>
       
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
         <input
@@ -131,6 +141,18 @@ const Home = () => {
             <p>from: {convertLangCode(translation.from_lang)}</p>
             <p>to: {convertLangCode(translation.to_lang)}</p>
             <p>{translation.translation}</p>
+            <button
+              onClick={() => {
+                setCurrentTranslation(translation)
+                const audio = new Audio(translation.audioUrl)
+                audio.onended = () => setCurrentTranslation(null)
+                audio.currentTime = 0
+                audio.play()
+              }}
+              className="rounded-md border shadow px-2 py-1 bg-black/10 hover:bg-black/20 transition-colors duration-200"
+            >
+              Play
+            </button>
           </div>
         ))}
       </div>
