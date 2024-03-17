@@ -50,7 +50,7 @@ const Home = () => {
   const onSubmit: SubmitHandler<Input> = (data) => {
     translateMutation.mutate({
       text: data.text,
-      lang: "es"
+      lang: data.lang
     })
   }
 
@@ -66,6 +66,20 @@ const Home = () => {
           className="rounded-md border shadow px-2 py-1 border-black/10"
         />
         {errors.text && <span>This field is required</span>}
+        <select
+          {...register("lang", { required: true })}
+          className="rounded-md border shadow px-2 py-1 border-black/10"
+        >
+          <option value="es">Spanish</option>
+          <option value="en">English</option>
+          <option value="fr">French</option>
+          <option value="de">German</option>
+          <option value="it">Italian</option>
+          <option value="pt">Portuguese</option>
+          <option value="zh">Chinese</option>
+          <option value="ja">Japanese</option>
+          <option value="ko">Korean</option>
+        </select>
         <button
           type="submit"
           disabled={isSubmitting}
