@@ -49,3 +49,23 @@ npx prisma generate
 ```bash
 npx prisma migrate dev --name new-model
 ```
+
+## Compatibility flags
+- [nodejs_compat](https://developers.cloudflare.com/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) | Cloudflare docs
+
+## Environment variables
+
+### using `wrangler.toml`
+
+```toml
+[vars]
+
+KEY = "..."
+```
+
+### using `.dev.vars`
+
+similar to a regular .env
+```
+KEY=...
+```
