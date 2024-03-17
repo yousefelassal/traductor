@@ -54,6 +54,11 @@ const Home = () => {
     })
   }
 
+  const convertLangCode = (code: string) => {
+    const lang = new Intl.DisplayNames(['en'], { type: 'language' });
+    return lang.of(code)
+  }
+
   return (
     <div className="container mx-auto py-12 flex flex-col gap-2 items-center">
       <h1 className="text-3xl font-bold">Current Translation: {currentTranslation.translation} </h1>
@@ -95,8 +100,8 @@ const Home = () => {
       >
         {allTranslations.map((translation, i) => (
           <div key={i} className="rounded-md border shadow-md">
-            <p>from: {translation.from_lang}</p>
-            <p>to: {translation.to_lang}</p>
+            <p>from: {convertLangCode(translation.from_lang)}</p>
+            <p>to: {convertLangCode(translation.to_lang)}</p>
             <p>{translation.translation}</p>
           </div>
         ))}
