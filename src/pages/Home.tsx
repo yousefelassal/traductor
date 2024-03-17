@@ -8,10 +8,16 @@ const Home = () => {
   return (
     <div className="relative min-h-screen w-screen flex">
       <Sidebar />
-      <h1 className="text-3xl font-bold">{currentTranslation?.translation} </h1>
-      <div className="z-40 md:justify-center fixed bottom-4 left-60 right-4 flex gap-3 flex-wrap justify-stretch">
-        <TypingForm />
-      </div>
+      <main className="py-20 flex items-center justify-center w-full">
+        {currentTranslation ? (
+          <p className="text-2xl">{currentTranslation.translation}</p>
+        )
+        :
+        (
+          <p className="text-2xl">Type something to translate</p>
+        )}
+      </main>
+      <TypingForm />
     </div>
   )
 }
