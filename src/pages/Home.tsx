@@ -73,8 +73,8 @@ const Home = () => {
           <option value="es">Spanish</option>
           <option value="en">English</option>
           <option value="fr">French</option>
-          <option value="de">German</option>
           <option value="it">Italian</option>
+          <option value="de">German</option>
           <option value="pt">Portuguese</option>
           <option value="zh">Chinese</option>
           <option value="ja">Japanese</option>
