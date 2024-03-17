@@ -87,7 +87,8 @@ const TypingForm = () => {
     }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="fixed z-40 bg-gradient-to-tr from-slate-300/30 via-gray-400/30 to-slate-600/30 backdrop-blur-md rounded-lg border-slate-100/30 border px-4 lg:px-12 py-2 inset-x-0 bottom-0 flex flex-col gap-2">
+    <form onSubmit={handleSubmit(onSubmit)} className="z-40 bg-gradient-to-tr from-slate-300/30 via-gray-400/30 to-slate-600/30 backdrop-blur-md rounded-lg border-slate-100/30 border px-4 lg:px-12 py-2 w-full flex gap-2">
+        <div className="flex flex-col gap-2 flex-1">
         <input
           type="text"
           {...register("text", { required: true })}
@@ -110,6 +111,7 @@ const TypingForm = () => {
           <option value="ja">Japanese</option>
           <option value="ko">Korean</option>
         </select>
+        </div>
         <button
           type="submit"
           disabled={isSubmitting}
