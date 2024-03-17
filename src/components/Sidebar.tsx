@@ -17,10 +17,8 @@ const Sidebar = () => {
   }
 
   return (
-    <div
-        ref={animationParent}
-        className="sticky inset-y-0 left-0 flex flex-col gap-1 bg-gradient-to-b from-blue-400/60 via-blue-500/60 to-blue-500/80 min-w-60 overflow-y-auto backdrop-blur-md border-blue-100/30 border z-40"
-      >
+    <div className="sticky inset-y-0 left-2 min-w-60 z-40 py-2">
+        <div ref={animationParent} className="flex flex-col py-4 px-2 h-full rounded-lg gap-1 bg-gradient-to-b from-slate-300/30 via-gray-400/30 to-slate-600/30 overflow-y-auto backdrop-blur-md">
         {allTranslations.map((translation) => (
           <div key={translation.id} className="rounded-md border shadow-md">
             <p>from: {convertLangCode(translation.from_lang)}</p>
@@ -53,6 +51,7 @@ const Sidebar = () => {
             )}
           </div>
         ))}
+        </div>
     </div>
   )
 }
