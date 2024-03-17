@@ -26,6 +26,29 @@ const Home = () => {
     addTranslation,
     setCurrentTranslation
   } = useTranslationStore()
+
+  const $postTts = client.api.tts.$post
+
+  const ttsMutation = useMutation<
+    InferResponseType<typeof $postTts>,
+    Error,
+    InferRequestType<typeof $postTts>['form']
+  >({
+    mutationFn: async (text) => {
+      const res = await $postTts({
+        form: text
+      })
+      return await res.blob()
+    },
+    onSuccess(data) {
+      console.log(data)
+      const url = URL.createObjectURL(data as Blob)
+      const audio = new Audio(url)
+      console.log(audio)
+      audio.currentTime = 0
+      audio.play()
+    },
+  })
   
   const $post = client.api.translate.$post
   
@@ -44,6 +67,10 @@ const Home = () => {
       addTranslation(data)
       setCurrentTranslation(data)
       reset()
+      ttsMutation.mutate({
+        text: data.translation,
+        lang: data.to_lang
+      })
     },
   })
   
