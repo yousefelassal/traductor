@@ -15,7 +15,7 @@ jobs:
                 deploy_hook: ${{ secrets.DEPLOY_HOOK }}
               if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ''), '#skip') }}
               run: |
-                curl "$deploy_url"
+                curl -X POST "$deploy_hook"
     
     tag_release:
         needs: [deployment_pipeline]
