@@ -7,6 +7,7 @@ import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 type Input = {
   text: string | File
+  lang: string
 }
 
 const Home = () => {
@@ -47,7 +48,10 @@ const Home = () => {
   })
   
   const onSubmit: SubmitHandler<Input> = (data) => {
-    translateMutation.mutate({ text: data.text })
+    translateMutation.mutate({
+      text: data.text,
+      lang: "es"
+    })
   }
 
   return (
@@ -77,7 +81,8 @@ const Home = () => {
       >
         {allTranslations.map((translation, i) => (
           <div key={i} className="rounded-md border shadow-md">
-            <p>{translation.lang}</p>
+            <p>from: {translation.from_lang}</p>
+            <p>to: {translation.to_lang}</p>
             <p>{translation.translation}</p>
           </div>
         ))}
