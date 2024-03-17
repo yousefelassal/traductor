@@ -134,8 +134,8 @@ const Home = () => {
         ref={animationParent}
         className="flex flex-col gap-1"
       >
-        {allTranslations.map((translation, i) => (
-          <div key={i} className="rounded-md border shadow-md">
+        {allTranslations.map((translation) => (
+          <div key={translation.id} className="rounded-md border shadow-md">
             <p>from: {convertLangCode(translation.from_lang)}</p>
             <p>to: {convertLangCode(translation.to_lang)}</p>
             <p>{translation.translation}</p>
