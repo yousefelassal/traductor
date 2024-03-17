@@ -15,7 +15,7 @@ const TypingForm = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting },
+        formState: { isSubmitting },
         reset
     } = useForm<Input>()
     
@@ -87,38 +87,39 @@ const TypingForm = () => {
     }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="z-40 bg-gradient-to-tr from-slate-300/30 via-gray-400/30 to-slate-600/30 backdrop-blur-md rounded-lg border-slate-100/30 border px-4 lg:px-12 py-2 w-full flex gap-2">
-        <div className="flex flex-col gap-2 flex-1">
-        <input
-          type="text"
-          {...register("text", { required: true })}
-          placeholder="Enter text to translate"
-          className="rounded-md border shadow px-2 py-1 border-black/10"
-        />
-        {errors.text && <span>This field is required</span>}
-        <select
-          {...register("lang", { required: true })}
-          className="rounded-md border shadow px-2 py-1 border-black/10"
-        >
-          <option value="es">Spanish</option>
-          <option value="en">English</option>
-          <option value="ru">Russian</option>
-          <option value="ar">Arabic</option>
-          <option value="fr">French</option>
-          <option value="it">Italian</option>
-          <option value="de">German</option>
-          <option value="pt">Portuguese</option>
-          <option value="ja">Japanese</option>
-          <option value="ko">Korean</option>
-        </select>
+    <form onSubmit={handleSubmit(onSubmit)} className="">
+        <div className="z-40 bg-gradient-to-tr from-slate-300/30 via-gray-400/30 to-slate-600/30 backdrop-blur-md rounded-lg border-slate-100/30 border px-4 lg:px-6 py-2 flex gap-2 md:justify-center fixed bottom-4 left-64 right-4 flex-wrap justify-stretch">
+            <input
+                type="text"
+                {...register("text", { required: true })}
+                placeholder="Enter text to translate"
+                className="rounded-3xl border shadow px-3 py-2 flex-1 border-black/10"
+            />
+            <button
+                type="submit"
+                disabled={isSubmitting}
+                className="rounded-md border shadow px-2 py-1 bg-black/10 hover:bg-black/20 transition-colors duration-200"
+            >
+                {isSubmitting ? "Translating..." : "Translate"}
+            </button>
         </div>
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="rounded-md border shadow px-2 py-1 bg-black/10 hover:bg-black/20 transition-colors duration-200"
-        >
-          {isSubmitting ? "Translating..." : "Translate"}
-        </button>
+        <div className="fixed top-0 left-60 z-40 bg-gradient-to-tr from-slate-300/30 via-gray-400/30 to-slate-600/30 backdrop-blur-md border-slate-100/30 border py-2 flex inset-x-0 gap-2">
+            <select
+            {...register("lang", { required: true })}
+            className="rounded-md border shadow px-2 py-1 border-black/10"
+            >
+            <option value="es">Spanish</option>
+            <option value="en">English</option>
+            <option value="ru">Russian</option>
+            <option value="ar">Arabic</option>
+            <option value="fr">French</option>
+            <option value="it">Italian</option>
+            <option value="de">German</option>
+            <option value="pt">Portuguese</option>
+            <option value="ja">Japanese</option>
+            <option value="ko">Korean</option>
+            </select>
+        </div>
     </form>
   )
 }
