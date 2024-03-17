@@ -3,6 +3,7 @@ import { useTranslationStore } from '../../stores/translation'
 import { useMutation } from '@tanstack/react-query'
 import { client } from '../libs/utils'
 import { useForm, SubmitHandler } from "react-hook-form"
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 type Input = {
   text: string | File
@@ -15,6 +16,8 @@ const Home = () => {
     formState: { errors, isSubmitting },
     reset
   } = useForm<Input>()
+
+  const [animationParent] = useAutoAnimate()
 
   const {
     allTranslations,
@@ -68,9 +71,12 @@ const Home = () => {
         </button>
       </form>
 
-      <div className="rounded-md border shadow-md">
+      <div
+        ref={animationParent}
+        className="flex flex-col gap-1"
+      >
         {allTranslations.map((translation, i) => (
-          <div key={i}>
+          <div key={i} className="rounded-md border shadow-md">
             <p>{translation.lang}</p>
             <p>{translation.translation}</p>
           </div>
