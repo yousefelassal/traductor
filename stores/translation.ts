@@ -1,10 +1,11 @@
 import { create } from 'zustand'
 
 type translation = {
+    id: string
     from_lang: string
     translation: string
     to_lang: string
-    audioUrl: string
+    audio: HTMLAudioElement
 }
 
 type translationStore = {
