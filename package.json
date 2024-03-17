@@ -11,6 +11,7 @@
     "deploy": "npm run build && wrangler pages deploy pages"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^0.8.1",
     "@hono/zod-validator": "^0.2.0",
     "@prisma/client": "^5.11.0",
     "@prisma/extension-accelerate": "^1.0.0",
