@@ -15,11 +15,11 @@ const Sidebar = () => {
     const lang = new Intl.DisplayNames(['en'], { type: 'language' });
     return lang.of(code)
   }
-  
+
   return (
     <div
         ref={animationParent}
-        className="sticky inset-y-0 left-0 flex flex-col gap-1 bg-gradient-to-b from-blue-400/60 via-blue-500/60 to-blue-500/80 py-2 lg:px-16 overflow-y-auto backdrop-blur-md border-blue-100/30 border z-40"
+        className="sticky inset-y-0 left-0 flex flex-col gap-1 bg-gradient-to-b from-blue-400/60 via-blue-500/60 to-blue-500/80 min-w-60 overflow-y-auto backdrop-blur-md border-blue-100/30 border z-40"
       >
         {allTranslations.map((translation) => (
           <div key={translation.id} className="rounded-md border shadow-md">
