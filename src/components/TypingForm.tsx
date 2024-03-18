@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 import { client } from '../libs/utils'
 import { useForm, SubmitHandler } from "react-hook-form"
 import { v4 as uuidv4 } from 'uuid'
-import { PaperAirplaneIcon } from '@heroicons/react/24/solid'
+import { PaperAirplaneIcon, ArrowPathIcon } from '@heroicons/react/24/solid'
 
 type Input = {
     text: string | File
@@ -22,7 +22,9 @@ const TypingForm = () => {
     
     const {
         addTranslation,
-        setCurrentTranslation
+        setCurrentTranslation,
+        loading,
+        setLoading
     } = useTranslationStore()
     
     const $postTts = client.api.tts.$post
@@ -48,6 +50,7 @@ const TypingForm = () => {
         InferRequestType<typeof $post>['form']
     >({
         mutationFn: async (text) => {
+          setLoading(true)
           const res = await $post({
             form: text
           })
@@ -58,7 +61,8 @@ const TypingForm = () => {
           ttsMutation.mutate({
             text: data.translation,
             lang: data.to_lang
-        },{
+          },
+          {
             onSuccess: (dataTts) => {
               const url = URL.createObjectURL(dataTts as Blob)
               const audio = new Audio(url)
@@ -74,7 +78,8 @@ const TypingForm = () => {
               audio.currentTime = 0
               audio.onended = () => setCurrentTranslation(null)
               audio.play()
-            }
+            },
+            onSettled: () => setLoading(false)
           })
         },
       })
@@ -100,7 +105,9 @@ const TypingForm = () => {
                 disabled={isSubmitting}
                 className="group rounded-md border shadow px-2 py-1 bg-white/80 hover:bg-black/20 transition-colors duration-200"
             >
+              {loading ? <ArrowPathIcon className="w-6 h-6 animate-spin" /> : 
                 <PaperAirplaneIcon className="w-6 h-6 -rotate-90 group-hover:fill-white transition-all duration-200" />
+              }
             </button>
         </div>
         <div className="fixed top-2 left-64 right-4 rounded-md px-2 z-40 bg-gradient-to-tr from-slate-300/30 via-gray-400/30 to-slate-600/30 backdrop-blur-md border-slate-100/30 border py-2 flex inset-x-0 gap-2">
