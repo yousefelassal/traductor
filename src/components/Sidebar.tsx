@@ -2,6 +2,7 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { useTranslationStore } from '../../stores/translation'
 import { PauseIcon, PlayIcon } from '@heroicons/react/24/solid'
+import { cn } from '../libs/utils'
 
 const Sidebar = () => {
   const [animationParent] = useAutoAnimate()
@@ -9,6 +10,8 @@ const Sidebar = () => {
   const {
     allTranslations,
     currentTranslation,
+    currentAudio,
+    setCurrentAudio,
     setCurrentTranslation
   } = useTranslationStore()
 
@@ -23,7 +26,9 @@ const Sidebar = () => {
         {allTranslations.map((translation) => (
           <button
             key={translation.id}
-            className="flex flex-col rounded-xl transition-colors px-2 py-1 hover:text-white hover:bg-gray-200/70"
+            className={cn("flex flex-col rounded-xl transition-colors px-2 py-1 hover:text-white hover:bg-gray-200/70", 
+              currentTranslation?.id === translation.id && "bg-gray-200/70"
+            )}
             onClick={() => setCurrentTranslation(translation)}
           >
             <div className="flex justify-between w-full">
@@ -32,11 +37,11 @@ const Sidebar = () => {
             </div>
             <div className="flex justify-between w-full">
             <p className="truncate">{translation.translation}</p>
-            {currentTranslation?.id === translation.id ? (
+            {currentAudio?.id === translation.audio.id ? (
               <button
                 onClick={() => {
-                  setCurrentTranslation(null)
-                  translation.audio.pause()
+                  setCurrentAudio(null)
+                  translation.audio.audio.pause()
                 }}
                 className="rounded-full flex w-fit items-center justify-center border shadow p-1 bg-white/50 hover:bg-white/60 transition-colors duration-200"
               >
@@ -47,10 +52,10 @@ const Sidebar = () => {
             (
               <button
                 onClick={() => {
-                  setCurrentTranslation(translation)
-                  translation.audio.currentTime = 0
-                  translation.audio.onended = () => setCurrentTranslation(null)
-                  translation.audio.play()
+                  setCurrentAudio(translation.audio)
+                  translation.audio.audio.currentTime = 0
+                  translation.audio.audio.onended = () => setCurrentAudio(null)
+                  translation.audio.audio.play()
                 }}
                 className="rounded-full flex w-fit items-center justify-center border shadow p-1 bg-white/50 hover:bg-white/60 transition-colors duration-200"
                 >
