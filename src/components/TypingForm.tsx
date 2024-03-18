@@ -19,7 +19,6 @@ const TypingForm = () => {
         reset
     } = useForm<Input>()
     
-
     const {
         addTranslation,
         setCurrentTranslation
@@ -93,7 +92,7 @@ const TypingForm = () => {
                 type="text"
                 {...register("text", { required: true })}
                 placeholder="Enter text to translate"
-                className="rounded-3xl border shadow px-3 py-2 flex-1 border-black/10"
+                className="rounded-3xl border shadow px-3 py-2 flex-1 bg-white/80 text-black border-black/10 focus:outline-none focus:ring-2 focus:ring-black/20 transition-all duration-200"
             />
             <button
                 type="submit"
