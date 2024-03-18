@@ -4,7 +4,7 @@ import Sidebar from '../components/Sidebar'
 import { BackgroundGradientAnimation } from '../components/ui/background-gradient'
 
 const Home = () => {
-  const { currentTranslation } = useTranslationStore()
+  const { currentTranslation, loading } = useTranslationStore()
 
   return (
     <BackgroundGradientAnimation>
@@ -19,7 +19,7 @@ const Home = () => {
           :
           (
             <p className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75">
-              Type something to translate
+              {loading ? 'Translating...' : 'Type something to translate'}
             </p>
           )}
         </main>
