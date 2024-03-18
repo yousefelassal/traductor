@@ -129,12 +129,12 @@ const TypingForm = () => {
         </div>
         <div className="fixed justify-between items-center top-2 left-4 md:left-64 right-4 rounded-md px-2 z-40 bg-gradient-to-tr from-slate-300/30 via-gray-400/30 to-slate-600/30 backdrop-blur-md border-violet-300/30 border py-2 flex inset-x-0 gap-2">
           {isSmallDevice && (
-            <button
+            <div
               onClick={toggle}
-              className="rounded-full flex w-fit items-center justify-center border shadow p-1 bg-white/50 hover:bg-white/60 transition-colors duration-200"
+              className="rounded-full hover:cursor-pointer flex w-fit items-center justify-center border shadow p-1 bg-white/50 hover:bg-white/60 transition-colors duration-200"
             >
               <Bars3Icon className="w-6 h-6 fill-white/90" />
-            </button>
+            </div>
           )}
           <div className="flex items-center gap-2">
             <LanguageIcon className="w-6 h-6 text-white/90" />
