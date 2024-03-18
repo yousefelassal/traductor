@@ -25,12 +25,13 @@ const Sidebar = () => {
           <p className="text-center text-gray-400">No translations yet</p>
         )}
         {allTranslations.map((translation) => (
-          <button
+          <div
             key={translation.id}
             className={cn("flex flex-col gap-1 rounded-xl transition-all px-2 py-1 text-white", 
               currentTranslation?.id === translation.id ? "bg-gradient-to-tr from-purple-400/70 via-violet-400/70 to-purple-300 shadow-md" : "hover:bg-purple-300/60"
             )}
             onClick={() => setCurrentTranslation(translation)}
+            aria-label="Select"
           >
             <div className="flex gap-1 w-full">
               <div className="flex flex-col items-center">
@@ -68,7 +69,7 @@ const Sidebar = () => {
               </button>
             )}
           </div>
-        </button>
+        </div>
         ))}
         </div>
     </div>
