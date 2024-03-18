@@ -4,9 +4,11 @@ import { useTranslationStore } from '../../stores/translation'
 import { PauseIcon, PlayIcon } from '@heroicons/react/24/solid'
 import { cn, convertLangToFlag } from '../libs/utils'
 import ReactCountryFlag from 'react-country-flag'
+import useNavStore from '../../stores/nav'
 
 const Sidebar = () => {
   const [animationParent] = useAutoAnimate()
+  const { isOpen } = useNavStore()
 
   const {
     allTranslations,
@@ -19,7 +21,9 @@ const Sidebar = () => {
   
 
   return (
-    <div className="sticky inset-y-0 left-2 min-w-60 max-w-60 z-40 py-2 hidden md:block">
+    <div className={cn("fixed md:sticky inset-y-0 inset-x-0 md:inset-x-auto md:left-2 min-w-60 max-w-60 py-2 hidden z-50 md:block",
+      isOpen ? "block" : "hidden"
+    )}>
         <div ref={animationParent} className="flex flex-col py-4 px-2 rounded-lg gap-1 bg-gradient-to-b from-slate-300/30 via-gray-400/30 to-slate-600/30 overflow-y-auto h-[calc(100vh-16px)] backdrop-blur-md border border-violet-400/30">
         {allTranslations.length === 0 && (
           <p className="text-center text-gray-400">No translations yet</p>
@@ -27,7 +31,7 @@ const Sidebar = () => {
         {allTranslations.map((translation) => (
           <div
             key={translation.id}
-            className={cn("flex flex-col gap-1 rounded-xl transition-all px-2 py-1 text-white", 
+            className={cn("flex flex-col gap-1 rounded-xl hover:cursor-pointer  transition-all px-2 py-1 text-white", 
               currentTranslation?.id === translation.id ? "bg-gradient-to-tr from-purple-400/70 via-violet-400/70 to-purple-300 shadow-md" : "hover:bg-purple-300/60"
             )}
             onClick={() => setCurrentTranslation(translation)}
@@ -41,7 +45,7 @@ const Sidebar = () => {
                 <ReactCountryFlag countryCode={convertLangToFlag(translation.to_lang)} svg />
               </div>
             </div>
-            <div className="flex justify-between w-full">
+            <div className="flex gap-1 justify-between w-full">
             <p className="truncate">{translation.translation}</p>
             {currentAudio?.id === translation.audio.id ? (
               <button
