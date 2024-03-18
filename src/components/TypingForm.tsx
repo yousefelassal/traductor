@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 import { client } from '../libs/utils'
 import { useForm, SubmitHandler } from "react-hook-form"
 import { v4 as uuidv4 } from 'uuid'
-import { PaperAirplaneIcon, ArrowPathIcon } from '@heroicons/react/24/solid'
+import { PaperAirplaneIcon, ArrowPathIcon, LanguageIcon } from '@heroicons/react/24/solid'
 
 type Input = {
     text: string | File
@@ -116,7 +116,8 @@ const TypingForm = () => {
               }
             </button>
         </div>
-        <div className="fixed justify-end top-2 left-4 md:left-64 right-4 rounded-md px-2 z-40 bg-gradient-to-tr from-slate-300/30 via-gray-400/30 to-slate-600/30 backdrop-blur-md border-slate-100/30 border py-2 flex inset-x-0 gap-2">
+        <div className="fixed justify-end items-center top-2 left-4 md:left-64 right-4 rounded-md px-2 z-40 bg-gradient-to-tr from-slate-300/30 via-gray-400/30 to-slate-600/30 backdrop-blur-md border-slate-100/30 border py-2 flex inset-x-0 gap-2">
+            <LanguageIcon className="w-6 h-6 text-white/90" />
             <select
             {...register("lang", { required: true })}
             className="rounded-md border shadow px-2 py-1 border-black/10"
