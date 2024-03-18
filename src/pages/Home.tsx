@@ -4,15 +4,21 @@ import Sidebar from '../components/Sidebar'
 import { BackgroundGradientAnimation } from '../components/ui/background-gradient'
 import { convertLangToFlag, convertLangCode } from '../libs/utils'
 import ReactCountryFlag from 'react-country-flag'
+import { PauseIcon, PlayIcon } from '@heroicons/react/24/solid'
 
 const Home = () => {
-  const { currentTranslation, loading } = useTranslationStore()
+  const {
+    currentTranslation,
+    loading,
+    setCurrentAudio,
+    currentAudio
+  } = useTranslationStore()
 
   return (
     <BackgroundGradientAnimation>
       <div className="relative min-h-screen w-screen flex">
         <Sidebar />
-        <main className="py-20 flex text-white items-center justify-center w-full font-bold px-4 pointer-events-none text-3xl text-center md:text-4xl">
+        <main className="py-20 flex text-white items-center justify-center w-full font-bold px-4 text-3xl text-center md:text-4xl">
           {currentTranslation ? (
             loading ? 
               <p className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75">
@@ -53,10 +59,37 @@ const Home = () => {
                     </p>
                   </div>
                 </div>
-                <div className="flex flex-col flex-1 items-center justify-center">
+                <div className="flex flex-col gap-8 flex-1 items-center justify-center">
                   <p className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75">
                     {currentTranslation.translation}
                   </p>
+                  {currentAudio?.id === currentTranslation.audio.id ? (
+                    <button
+                      onClick={() => {
+                        setCurrentAudio(null)
+                        currentTranslation.audio.audio.pause()
+                      }}
+                      className="rounded-full z-10 font-medium text-lg px-4 py-1 gap-2 flex w-fit items-center justify-center border shadow p-1 bg-white/50 hover:bg-white/60 transition-colors duration-200"
+                    >
+                      Stop
+                      <PauseIcon className="w-6 h-6 fill-white/90" />
+                    </button>
+                  )
+                  : 
+                  (
+                    <button
+                      onClick={() => {
+                        setCurrentAudio(currentTranslation.audio)
+                        currentTranslation.audio.audio.currentTime = 0
+                        currentTranslation.audio.audio.onended = () => setCurrentAudio(null)
+                        currentTranslation.audio.audio.play()
+                      }}
+                      className="rounded-full text-lg font-medium z-10 flex gap-2 w-fit items-center justify-center border shadow px-4 py-1 bg-white/50 hover:bg-white/60 transition-colors duration-200"
+                    >
+                      Play
+                      <PlayIcon className="w-6 h-6 fill-white/90" />
+                    </button>
+                  )}
                 </div>
               </div>
           )
