@@ -17,6 +17,7 @@
     "@prisma/client": "^5.11.0",
     "@prisma/extension-accelerate": "^1.0.0",
     "@tanstack/react-query": "^5.28.2",
+    "@uidotdev/usehooks": "^2.4.1",
     "axios": "^1.6.7",
     "clsx": "^2.1.0",
     "framer-motion": "^11.0.14",
