@@ -45,7 +45,7 @@ const Sidebar = () => {
             )}
             onClick={() => {
               setCurrentTranslation(translation)
-              toggle()
+              isSmallDevice && toggle()
             }}
             aria-label="Select"
           >
@@ -61,7 +61,8 @@ const Sidebar = () => {
             <p className="truncate">{translation.translation}</p>
             {currentAudio?.id === translation.audio.id ? (
               <button
-                onClick={() => {
+                onClick={(e) => {
+                  isSmallDevice && e.stopPropagation()
                   setCurrentAudio(null)
                   translation.audio.audio.pause()
                 }}
@@ -73,7 +74,8 @@ const Sidebar = () => {
             : 
             (
               <button
-                onClick={() => {
+                onClick={(e) => {
+                  isSmallDevice && e.stopPropagation()
                   setCurrentAudio(translation.audio)
                   translation.audio.audio.currentTime = 0
                   translation.audio.audio.onended = () => setCurrentAudio(null)
