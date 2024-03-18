@@ -19,8 +19,6 @@ const Sidebar = () => {
     setCurrentTranslation
   } = useTranslationStore()
 
-  
-
   return (
     <div className={cn("fixed md:sticky w-full inset-y-0 inset-x-0 md:inset-x-auto md:left-2 min-w-60 md:max-w-60 py-2 px-2 md:px-0 hidden z-50 md:block",
       isOpen ? "block" : "hidden",
@@ -45,7 +43,10 @@ const Sidebar = () => {
             className={cn("flex flex-col gap-1 rounded-xl hover:cursor-pointer  transition-all px-2 py-1 text-white", 
               currentTranslation?.id === translation.id ? "bg-gradient-to-tr from-purple-400/70 via-violet-400/70 to-purple-300 shadow-md" : "hover:bg-purple-300/60"
             )}
-            onClick={() => setCurrentTranslation(translation)}
+            onClick={() => {
+              setCurrentTranslation(translation)
+              toggle()
+            }}
             aria-label="Select"
           >
             <div className="flex gap-1 w-full">
