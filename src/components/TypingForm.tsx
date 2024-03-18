@@ -103,7 +103,7 @@ const TypingForm = () => {
             <button
                 type="submit"
                 disabled={isSubmitting}
-                className="group rounded-md border shadow px-2 py-1 bg-white/80 hover:bg-black/20 transition-colors duration-200"
+                className="group rounded-full border shadow px-2 py-1 bg-white/80 hover:bg-black/20 transition-colors duration-200"
             >
               {loading ? <ArrowPathIcon className="w-6 h-6 animate-spin" /> : 
                 <PaperAirplaneIcon className="w-6 h-6 -rotate-90 group-hover:fill-white transition-all duration-200" />
