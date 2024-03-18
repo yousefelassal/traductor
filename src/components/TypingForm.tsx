@@ -4,7 +4,14 @@ import { useMutation } from '@tanstack/react-query'
 import { client } from '../libs/utils'
 import { useForm, SubmitHandler } from "react-hook-form"
 import { v4 as uuidv4 } from 'uuid'
-import { PaperAirplaneIcon, ArrowPathIcon, LanguageIcon } from '@heroicons/react/24/solid'
+import {
+  PaperAirplaneIcon,
+  ArrowPathIcon,
+  LanguageIcon,
+  Bars3Icon 
+} from '@heroicons/react/24/solid'
+import { useMediaQuery } from '@uidotdev/usehooks'
+import useNavStore from '../../stores/nav'
 
 type Input = {
     text: string | File
@@ -13,13 +20,15 @@ type Input = {
 }
 
 const TypingForm = () => {
-    const {
-        register,
-        handleSubmit,
-        formState: { isSubmitting },
-        reset,
-        getValues
-    } = useForm<Input>()
+  const {
+      register,
+      handleSubmit,
+      formState: { isSubmitting },
+      reset,
+      getValues
+  } = useForm<Input>()
+  const isSmallDevice = useMediaQuery('only screen and (max-width: 768px)')
+  const { toggle } = useNavStore()
     
     const {
         addTranslation,
@@ -118,7 +127,16 @@ const TypingForm = () => {
               }
             </button>
         </div>
-        <div className="fixed justify-end items-center top-2 left-4 md:left-64 right-4 rounded-md px-2 z-40 bg-gradient-to-tr from-slate-300/30 via-gray-400/30 to-slate-600/30 backdrop-blur-md border-violet-300/30 border py-2 flex inset-x-0 gap-2">
+        <div className="fixed justify-between items-center top-2 left-4 md:left-64 right-4 rounded-md px-2 z-40 bg-gradient-to-tr from-slate-300/30 via-gray-400/30 to-slate-600/30 backdrop-blur-md border-violet-300/30 border py-2 flex inset-x-0 gap-2">
+          {isSmallDevice && (
+            <button
+              onClick={toggle}
+              className="rounded-full flex w-fit items-center justify-center border shadow p-1 bg-white/50 hover:bg-white/60 transition-colors duration-200"
+            >
+              <Bars3Icon className="w-6 h-6 fill-white/90" />
+            </button>
+          )}
+          <div className="flex items-center gap-2">
             <LanguageIcon className="w-6 h-6 text-white/90" />
             <select
             {...register("lang", { required: true })}
@@ -135,6 +153,7 @@ const TypingForm = () => {
             <option value="ja">Japanese</option>
             <option value="ko">Korean</option>
             </select>
+          </div>
         </div>
     </form>
   )
