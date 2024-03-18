@@ -21,23 +21,23 @@ const Home = () => {
             : 
               <div className="flex flex-col justify-between w-full h-full">
                 <div className="flex justify-between text-base">
-                    <div className="flex items-center gap-2">
-                      <div className="flex flex-col items-center">
-                        <p className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75">
-                          {convertLangCode(currentTranslation.from_lang)}
-                        </p>
-                        <ReactCountryFlag
-                          countryCode={convertLangToFlag(currentTranslation.from_lang)}
-                          className="text-4xl"
-                          svg 
-                        />
-                        <p className="bg-clip-text font-thin text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75">
-                          From
-                        </p>
-                      </div>
-                      <p className="bg-clip-text text-xl text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75">
-                      {currentTranslation.text}
+                  <div className="flex items-center gap-2">
+                    <div className="flex flex-col items-center">
+                      <p className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75">
+                        {convertLangCode(currentTranslation.from_lang)}
                       </p>
+                      <ReactCountryFlag
+                        countryCode={convertLangToFlag(currentTranslation.from_lang)}
+                        className="text-4xl"
+                        svg 
+                      />
+                      <p className="bg-clip-text font-thin text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75">
+                        From
+                      </p>
+                    </div>
+                    <p className="bg-clip-text text-xl text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75">
+                      {currentTranslation.text}
+                    </p>
                   </div>
                   <div className="flex flex-col items-center">
                     <p className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75">
