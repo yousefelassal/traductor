@@ -20,7 +20,7 @@ const Sidebar = () => {
 
   return (
     <div className="sticky inset-y-0 left-2 min-w-60 max-w-60 z-40 py-2 hidden md:block">
-        <div ref={animationParent} className="flex flex-col py-4 px-2 rounded-lg gap-1 bg-gradient-to-b from-slate-300/30 via-gray-400/30 to-slate-600/30 overflow-y-auto h-[calc(100vh-16px)] backdrop-blur-md">
+        <div ref={animationParent} className="flex flex-col py-4 px-2 rounded-lg gap-1 bg-gradient-to-b from-slate-300/30 via-gray-400/30 to-slate-600/30 overflow-y-auto h-[calc(100vh-16px)] backdrop-blur-md border border-violet-400/30">
         {allTranslations.length === 0 && (
           <p className="text-center text-gray-400">No translations yet</p>
         )}
