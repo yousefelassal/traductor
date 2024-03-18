@@ -17,7 +17,8 @@ const TypingForm = () => {
         register,
         handleSubmit,
         formState: { isSubmitting },
-        reset
+        reset,
+        getValues
     } = useForm<Input>()
     
     const {
@@ -58,7 +59,6 @@ const TypingForm = () => {
           return await res.json()
         },
         onSuccess(data) {
-          reset( { text: '' } )
           ttsMutation.mutate({
             text: data.translation,
             lang: data.to_lang
@@ -76,8 +76,10 @@ const TypingForm = () => {
                 from_lang: data.from_lang,
                 to_lang: data.to_lang,
                 translation: data.translation,
-                audio: audioObject
+                audio: audioObject,
+                text: getValues().text as string
               }
+              reset( { text: '' } )
               addTranslation(translation)
               setCurrentTranslation(translation)
               audio.currentTime = 0
