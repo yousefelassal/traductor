@@ -2,7 +2,7 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { useTranslationStore } from '../../stores/translation'
 import { PauseIcon, PlayIcon } from '@heroicons/react/24/solid'
-import { cn, convertLangCode, convertLangToFlag } from '../libs/utils'
+import { cn, convertLangToFlag } from '../libs/utils'
 import ReactCountryFlag from 'react-country-flag'
 
 const Sidebar = () => {
@@ -32,14 +32,12 @@ const Sidebar = () => {
             )}
             onClick={() => setCurrentTranslation(translation)}
           >
-            <div className="flex justify-between w-full">
+            <div className="flex gap-1 w-full">
               <div className="flex flex-col items-center">
                 <ReactCountryFlag countryCode={convertLangToFlag(translation.from_lang)} svg />
-                <p className="font-thin text-xs">{convertLangCode(translation.from_lang)}</p>
               </div>
               <div className="flex flex-col items-center">
                 <ReactCountryFlag countryCode={convertLangToFlag(translation.to_lang)} svg />
-                <p className="font-thin text-xs">{convertLangCode(translation.to_lang)}</p>
               </div>
             </div>
             <div className="flex justify-between w-full">
