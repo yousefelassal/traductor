@@ -23,6 +23,7 @@ const TypingForm = () => {
     const {
         addTranslation,
         setCurrentTranslation,
+        setCurrentAudio,
         loading,
         setLoading
     } = useTranslationStore()
@@ -66,17 +67,22 @@ const TypingForm = () => {
             onSuccess: (dataTts) => {
               const url = URL.createObjectURL(dataTts as Blob)
               const audio = new Audio(url)
+              const audioObject = {
+                id: uuidv4().toString(),
+                audio: audio
+              }
               const translation = {
                 id: uuidv4().toString(),
                 from_lang: data.from_lang,
                 to_lang: data.to_lang,
                 translation: data.translation,
-                audio: audio
+                audio: audioObject
               }
               addTranslation(translation)
               setCurrentTranslation(translation)
               audio.currentTime = 0
-              audio.onended = () => setCurrentTranslation(null)
+              audio.onplay = () => setCurrentAudio(audioObject)
+              audio.onended = () => setCurrentAudio(null)
               audio.play()
             },
             onSettled: () => setLoading(false)
