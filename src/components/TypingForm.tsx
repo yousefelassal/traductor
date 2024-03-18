@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 import { client } from '../libs/utils'
 import { useForm, SubmitHandler } from "react-hook-form"
 import { v4 as uuidv4 } from 'uuid'
+import { PaperAirplaneIcon } from '@heroicons/react/24/solid'
 
 type Input = {
     text: string | File
@@ -97,9 +98,9 @@ const TypingForm = () => {
             <button
                 type="submit"
                 disabled={isSubmitting}
-                className="rounded-md border shadow px-2 py-1 bg-black/10 hover:bg-black/20 transition-colors duration-200"
+                className="group rounded-md border shadow px-2 py-1 bg-white/80 hover:bg-black/20 transition-colors duration-200"
             >
-                {isSubmitting ? "Translating..." : "Translate"}
+                <PaperAirplaneIcon className="w-6 h-6 -rotate-90 group-hover:fill-white transition-all duration-200" />
             </button>
         </div>
         <div className="fixed top-2 left-64 right-4 rounded-md px-2 z-40 bg-gradient-to-tr from-slate-300/30 via-gray-400/30 to-slate-600/30 backdrop-blur-md border-slate-100/30 border py-2 flex inset-x-0 gap-2">
