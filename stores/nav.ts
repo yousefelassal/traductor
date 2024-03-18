@@ -6,7 +6,7 @@ type navStore = {
 }
 
 const useNavStore = create<navStore>((set) => ({
-    isOpen: true,
+    isOpen: false,
     toggle: () => set((state) => ({ isOpen: !state.isOpen }))
 }))
 
