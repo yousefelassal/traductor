@@ -2,7 +2,7 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { useTranslationStore } from '../../stores/translation'
 import { PauseIcon, PlayIcon } from '@heroicons/react/24/solid'
-import { cn } from '../libs/utils'
+import { cn, convertLangCode, convertLangToFlag } from '../libs/utils'
 import ReactCountryFlag from 'react-country-flag'
 
 const Sidebar = () => {
@@ -16,37 +16,7 @@ const Sidebar = () => {
     setCurrentTranslation
   } = useTranslationStore()
 
-  const convertLangCode = (code: string) => {
-    const lang = new Intl.DisplayNames(['en'], { type: 'language' });
-    return lang.of(code)
-  }
-
-  const convertLangToFlag = (code: string) => {
-    switch (code) {
-      case 'en':
-        return 'GB'
-      case 'es':
-        return 'ES'
-      case 'fr':
-        return 'FR'
-      case 'it':
-        return 'IT'
-      case 'pt':
-        return 'PT'
-      case 'ru':
-        return 'RU'
-      case 'ja':
-        return 'JP'
-      case 'ko':
-        return 'KR'
-      case 'ar':
-        return 'SA'
-      case 'de':
-        return 'DE'
-      default:
-        return ''
-    }
-  }
+  
 
   return (
     <div className="sticky inset-y-0 left-2 min-w-60 max-w-60 z-40 py-2 hidden md:block">
