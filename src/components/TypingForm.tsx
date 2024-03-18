@@ -101,7 +101,7 @@ const TypingForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="">
-        <div className="z-40 bg-gradient-to-tr from-slate-300/30 via-gray-400/30 to-slate-600/30 backdrop-blur-md rounded-lg border-slate-100/30 border px-4 lg:px-6 py-2 flex gap-2 md:justify-center fixed bottom-4 left-4 md:left-64 right-4 flex-wrap justify-stretch">
+        <div className="z-40 bg-gradient-to-tr from-slate-300/30 via-gray-400/30 to-slate-600/30 backdrop-blur-md rounded-lg border-purple-400/30 border px-4 lg:px-6 py-2 flex gap-2 md:justify-center fixed bottom-4 left-4 md:left-64 right-4 flex-wrap justify-stretch">
             <input
                 type="text"
                 {...register("text", { required: true })}
@@ -118,7 +118,7 @@ const TypingForm = () => {
               }
             </button>
         </div>
-        <div className="fixed justify-end items-center top-2 left-4 md:left-64 right-4 rounded-md px-2 z-40 bg-gradient-to-tr from-slate-300/30 via-gray-400/30 to-slate-600/30 backdrop-blur-md border-slate-100/30 border py-2 flex inset-x-0 gap-2">
+        <div className="fixed justify-end items-center top-2 left-4 md:left-64 right-4 rounded-md px-2 z-40 bg-gradient-to-tr from-slate-300/30 via-gray-400/30 to-slate-600/30 backdrop-blur-md border-violet-300/30 border py-2 flex inset-x-0 gap-2">
             <LanguageIcon className="w-6 h-6 text-white/90" />
             <select
             {...register("lang", { required: true })}
