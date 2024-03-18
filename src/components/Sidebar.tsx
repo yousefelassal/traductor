@@ -21,12 +21,16 @@ const Sidebar = () => {
     <div className="sticky inset-y-0 left-2 min-w-60 z-40 py-2 hidden md:block">
         <div ref={animationParent} className="flex flex-col py-4 px-2 rounded-lg gap-1 bg-gradient-to-b from-slate-300/30 via-gray-400/30 to-slate-600/30 overflow-y-auto h-[calc(100vh-16px)] backdrop-blur-md">
         {allTranslations.map((translation) => (
-          <div key={translation.id} className="flex flex-col rounded-xl transition-colors px-2 py-1 hover:text-white hover:bg-gray-200/70">
-            <div className="flex justify-between">
+          <button
+            key={translation.id}
+            className="flex flex-col rounded-xl transition-colors px-2 py-1 hover:text-white hover:bg-gray-200/70"
+            onClick={() => setCurrentTranslation(translation)}
+          >
+            <div className="flex justify-between w-full">
               <p>from: {convertLangCode(translation.from_lang)}</p>
               <p>to: {convertLangCode(translation.to_lang)}</p>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between w-full">
             <p className="truncate">{translation.translation}</p>
             {currentTranslation?.id === translation.id ? (
               <button
@@ -54,7 +58,7 @@ const Sidebar = () => {
               </button>
             )}
           </div>
-        </div>
+        </button>
         ))}
         </div>
     </div>
