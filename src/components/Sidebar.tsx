@@ -29,8 +29,8 @@ const Sidebar = () => {
         {allTranslations.map((translation) => (
           <button
             key={translation.id}
-            className={cn("flex flex-col rounded-xl transition-colors px-2 py-1 hover:text-white hover:bg-gray-200/70", 
-              currentTranslation?.id === translation.id && "bg-gray-200/70"
+            className={cn("flex flex-col rounded-xl transition-all px-2 py-1 text-white", 
+              currentTranslation?.id === translation.id ? "bg-gradient-to-tr from-purple-400/70 via-violet-400/70 to-purple-300 shadow-md" : "hover:bg-purple-300/60"
             )}
             onClick={() => setCurrentTranslation(translation)}
           >
