@@ -11,6 +11,7 @@ type translation = {
     translation: string
     to_lang: string
     audio: audio
+    text: string
 }
 
 
