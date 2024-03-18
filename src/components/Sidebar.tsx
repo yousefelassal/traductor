@@ -1,6 +1,7 @@
 
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { useTranslationStore } from '../../stores/translation'
+import { PauseIcon, PlayIcon } from '@heroicons/react/24/solid'
 
 const Sidebar = () => {
   const [animationParent] = useAutoAnimate()
@@ -30,9 +31,9 @@ const Sidebar = () => {
                   setCurrentTranslation(null)
                   translation.audio.pause()
                 }}
-                className="rounded-md border shadow px-2 py-1 bg-black/10 hover:bg-black/20 transition-colors duration-200"
+                className="rounded-full flex w-fit items-center justify-center border shadow p-1 bg-white/50 hover:bg-white/60 transition-colors duration-200"
               >
-                Stop
+                <PauseIcon className="w-6 h-6 fill-white/90" />
               </button>
             )
             : 
@@ -44,9 +45,9 @@ const Sidebar = () => {
                   translation.audio.onended = () => setCurrentTranslation(null)
                   translation.audio.play()
                 }}
-                className="rounded-md border shadow px-2 py-1 bg-black/10 hover:bg-black/20 transition-colors duration-200"
+                className="rounded-full flex w-fit items-center justify-center border shadow p-1 bg-white/50 hover:bg-white/60 transition-colors duration-200"
               >
-                Play
+                <PlayIcon className="w-6 h-6 fill-white/90" />
               </button>
             )}
           </div>
