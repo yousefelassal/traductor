@@ -14,9 +14,11 @@ const Sidebar = () => {
   const {
     allTranslations,
     currentTranslation,
+    setCurrentTranslation,
     currentAudio,
     setCurrentAudio,
-    setCurrentTranslation
+    playAudio,
+    stopAudio
   } = useTranslationStore()
 
   return (
@@ -63,8 +65,7 @@ const Sidebar = () => {
               <button
                 onClick={(e) => {
                   isSmallDevice && e.stopPropagation()
-                  setCurrentAudio(null)
-                  translation.audio.audio.stop()
+                  stopAudio(translation.audio.audio)
                 }}
                 className="rounded-full flex w-fit items-center justify-center border shadow p-1 bg-white/50 hover:bg-white/60 transition-colors duration-200"
               >
@@ -76,9 +77,11 @@ const Sidebar = () => {
               <button
                 onClick={(e) => {
                   isSmallDevice && e.stopPropagation()
-                  setCurrentAudio(translation.audio)
-                  translation.audio.audio.on('end', () => setCurrentAudio(null))
-                  translation.audio.audio.play()
+                  if (currentAudio) {
+                    stopAudio(currentAudio.audio)
+                    setCurrentAudio(null)
+                  }
+                  playAudio(translation)
                 }}
                 className="rounded-full flex w-fit items-center justify-center border shadow p-1 bg-white/50 hover:bg-white/60 transition-colors duration-200"
                 >
