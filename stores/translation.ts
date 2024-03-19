@@ -21,10 +21,12 @@ type translationStore = {
     currentTranslation: translation | null,
     currentAudio: audio | null,
     loading: boolean
+    isPronouncing: boolean
     addTranslation: (translation: translation) => void,
     setCurrentTranslation: (translation: translation | null) => void
     setCurrentAudio: (audio: audio | null) => void
     setLoading: (loading: boolean) => void
+    setIsPronouncing: (isPronouncing: boolean) => void
     playAudio: (translation: translation) => void
     stopAudio: (audio: HTMLAudioElement) => void
 }
@@ -34,10 +36,12 @@ export const useTranslationStore = create<translationStore>((set) => ({
     currentTranslation: null,
     currentAudio: null,
     loading: false,
+    isPronouncing: false,
     addTranslation: (translation) => set((state) => ({ allTranslations: [...state.allTranslations, translation] })),
     setCurrentTranslation: (translation) => set(() => ({ currentTranslation: translation })),
     setCurrentAudio: (audio) => set(() => ({ currentAudio: audio })),
     setLoading: (loading) => set(() => ({ loading })),
+    setIsPronouncing: (isPronouncing) => set(() => ({ isPronouncing })),
     playAudio: (translation) => {
         const audio = new Audio(translation.audioUrl)
         const audioObject = {
@@ -46,15 +50,24 @@ export const useTranslationStore = create<translationStore>((set) => ({
         }
         set((state) => ({
             allTranslations:
-                state.allTranslations.map(t => t.id === translation.id ? { ...t, audio: audioObject } : t) 
+                state.allTranslations.map(t => t.id === translation.id ? { ...t, audio: audioObject } : t),
             }
         ))
-        audio.onplay = () => set(() => ({ currentAudio: audioObject }))
-        audio.onended = () => set(() => ({ currentAudio: null }))
+        audio.onplay = () => set(() => ({
+            currentAudio: audioObject,
+            isPronouncing: true
+        }))
+        audio.onended = () => set(() => ({
+            currentAudio: null,
+            isPronouncing: false
+        }))
         audio.play()
     },
     stopAudio: (audio) => {
         audio.pause()
-        set(() => ({ currentAudio: null }))
+        set(() => ({
+            currentAudio: null,
+            isPronouncing: false
+        }))
     }
 }))
