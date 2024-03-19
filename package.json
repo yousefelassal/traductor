@@ -22,6 +22,7 @@
     "clsx": "^2.1.0",
     "framer-motion": "^11.0.14",
     "hono": "^4.1.0",
+    "howler": "^2.2.4",
     "microsoft-cognitiveservices-speech-sdk": "^1.36.0",
     "react": "^18.2.0",
     "react-country-flag": "^3.1.0",
@@ -34,6 +35,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@types/howler": "^2.2.11",
     "@types/react": "^18.2.64",
     "@types/react-dom": "^18.2.21",
     "@types/uuid": "^9.0.8",
