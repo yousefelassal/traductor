@@ -12,7 +12,6 @@ import {
 } from '@heroicons/react/24/solid'
 import { useMediaQuery } from '@uidotdev/usehooks'
 import useNavStore from '../../stores/nav'
-import { Howl } from 'howler'
 
 type Input = {
     text: string | File
@@ -76,28 +75,26 @@ const TypingForm = () => {
           {
             onSuccess: (dataTts) => {
               const url = URL.createObjectURL(dataTts as Blob)
-              const audio = new Howl({
-                src: [url],
-                html5: true,
-                preload: true
-              })
+              const audio = new Audio(url)
+              const id = uuidv4().toString()
               const audioObject = {
-                id: uuidv4().toString(),
+                id: id,
                 audio: audio
               }
               const translation = {
-                id: uuidv4().toString(),
+                id: id,
                 from_lang: data.from_lang,
                 to_lang: data.to_lang,
                 translation: data.translation,
                 audio: audioObject,
+                audioUrl: url,
                 text: getValues().text as string
               }
               reset( { text: '' } )
               addTranslation(translation)
               setCurrentTranslation(translation)
-              audio.on('play', () => setCurrentAudio(audioObject))
-              audio.on('end', () => setCurrentAudio(null))
+              audio.onplay = () => setCurrentAudio(audioObject)
+              audio.onended = () => setCurrentAudio(null)
               audio.play()
             },
             onSettled: () => setLoading(false)
