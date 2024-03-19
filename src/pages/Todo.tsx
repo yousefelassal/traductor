@@ -1,5 +1,5 @@
 import { useQuery, useMutation } from '@tanstack/react-query'
-import { client, queryClient } from '../libs/utils'
+import { client, queryClient } from '../lib/utils'
 import { InferResponseType, InferRequestType } from 'hono/client'
 
 const Todos = () => {

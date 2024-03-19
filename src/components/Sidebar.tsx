@@ -1,7 +1,7 @@
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { useTranslationStore } from '../../stores/translation'
 import { PauseIcon, PlayIcon, XMarkIcon } from '@heroicons/react/24/solid'
-import { cn, convertLangToFlag } from '../libs/utils'
+import { cn, convertLangToFlag } from '../lib/utils'
 import ReactCountryFlag from 'react-country-flag'
 import useNavStore from '../../stores/nav'
 import { useMediaQuery } from '@uidotdev/usehooks'

@@ -5,7 +5,7 @@ import {
   Route
 } from 'react-router-dom'
 import Todos from './pages/Todo'
-import { queryClient } from './libs/utils'
+import { queryClient } from './lib/utils'
 import Home from './pages/Home'
 
 export default function App() {

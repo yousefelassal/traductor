@@ -1,7 +1,7 @@
 import { InferResponseType, InferRequestType } from 'hono/client'
 import { useTranslationStore } from '../../stores/translation'
 import { useMutation } from '@tanstack/react-query'
-import { client } from '../libs/utils'
+import { client } from '../lib/utils'
 import { useForm, SubmitHandler } from "react-hook-form"
 import { v4 as uuidv4 } from 'uuid'
 import {
@@ -12,6 +12,14 @@ import {
 } from '@heroicons/react/24/solid'
 import { useMediaQuery } from '@uidotdev/usehooks'
 import useNavStore from '../../stores/nav'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
 
 type Input = {
     text: string | File
@@ -146,21 +154,26 @@ const TypingForm = () => {
           )}
           <div className="flex items-center gap-2">
             <LanguageIcon className="w-6 h-6 text-white/90" />
-            <select
+            <Select defaultValue='es'>
+            <SelectTrigger
             {...register("lang", { required: true })}
             className="rounded-md border shadow px-2 py-1 border-black/10"
             >
-            <option value="es">Spanish</option>
-            <option value="en">English</option>
-            <option value="ru">Russian</option>
-            <option value="ar">Arabic</option>
-            <option value="fr">French</option>
-            <option value="it">Italian</option>
-            <option value="de">German</option>
-            <option value="pt">Portuguese</option>
-            <option value="ja">Japanese</option>
-            <option value="ko">Korean</option>
-            </select>
+              <SelectValue placeholder="Select language"/>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="es">Spanish</SelectItem>
+              <SelectItem value="en">English</SelectItem>
+              <SelectItem value="ru">Russian</SelectItem>
+              <SelectItem value="ar">Arabic</SelectItem>
+              <SelectItem value="fr">French</SelectItem>
+              <SelectItem value="it">Italian</SelectItem>
+              <SelectItem value="de">German</SelectItem>
+              <SelectItem value="pt">Portuguese</SelectItem>
+              <SelectItem value="ja">Japanese</SelectItem>
+              <SelectItem value="ko">Korean</SelectItem>
+            </SelectContent>
+            </Select>
           </div>
         </div>
     </form>
