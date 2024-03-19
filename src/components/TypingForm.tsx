@@ -30,7 +30,9 @@ import {
 import { Input } from './ui/input'
 
 const formSchema = z.object({
-  text: z.string(),
+  text: z.string({
+    required_error: 'Text is required'
+  }),
   lang: z.string()
 })
 
@@ -124,6 +126,7 @@ const TypingForm = () => {
       })
       
     const onSubmit = (data: z.infer<typeof formSchema>) => {
+      if(data.text)
         translateMutation.mutate({
           text: data.text,
           lang: data.lang
