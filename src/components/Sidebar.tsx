@@ -64,7 +64,7 @@ const Sidebar = () => {
                 onClick={(e) => {
                   isSmallDevice && e.stopPropagation()
                   setCurrentAudio(null)
-                  translation.audio.audio.pause()
+                  translation.audio.audio.stop()
                 }}
                 className="rounded-full flex w-fit items-center justify-center border shadow p-1 bg-white/50 hover:bg-white/60 transition-colors duration-200"
               >
@@ -77,8 +77,7 @@ const Sidebar = () => {
                 onClick={(e) => {
                   isSmallDevice && e.stopPropagation()
                   setCurrentAudio(translation.audio)
-                  translation.audio.audio.currentTime = 0
-                  translation.audio.audio.onended = () => setCurrentAudio(null)
+                  translation.audio.audio.on('end', () => setCurrentAudio(null))
                   translation.audio.audio.play()
                 }}
                 className="rounded-full flex w-fit items-center justify-center border shadow p-1 bg-white/50 hover:bg-white/60 transition-colors duration-200"
