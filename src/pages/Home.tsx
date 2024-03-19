@@ -6,6 +6,7 @@ import { convertLangToFlag, convertLangCode } from '../lib/utils'
 import ReactCountryFlag from 'react-country-flag'
 import { PauseIcon, PlayIcon } from '@heroicons/react/24/solid'
 import { TextGenerateEffect } from '../components/ui/text-generate-effect'
+import { cn } from '../lib/utils'
 
 const Home = () => {
   const {
@@ -25,9 +26,13 @@ const Home = () => {
         <main className="py-20 flex text-white items-center justify-center w-full font-bold px-4 text-3xl text-center md:text-4xl">
           {currentTranslation ? (
             loading ? 
-              <p className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75">
-                  Translating...
-              </p>
+            <div className="flex flex-col items-center justify-center gap-2">
+              <img
+                src="https://utfs.io/f/48e43dfb-9f94-404f-a052-726b7df9637c-tmua4d.png"
+                alt="translate illustration"
+                className="animate-spin w-16 h-16"
+              />
+            </div>
             : 
               <div className="flex flex-col justify-between w-full h-full">
                 <div className="flex justify-between text-base">
@@ -101,9 +106,18 @@ const Home = () => {
           )
           :
           (
-            <p className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75">
-              {loading ? 'Translating...' : 'Type something to translate'}
-            </p>
+            <div className="flex flex-col items-center justify-center gap-2">
+              <img
+                src="https://utfs.io/f/48e43dfb-9f94-404f-a052-726b7df9637c-tmua4d.png"
+                alt="translate illustration"
+                className={cn("w-16 h-16", 
+                  loading && "animate-spin"
+                )}
+              />
+              <p className="bg-clip-text text-2xl text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75">
+                  {loading ? '' : 'Type something to translate'}
+              </p>
+            </div>
           )}
         </main>
         <TypingForm />
