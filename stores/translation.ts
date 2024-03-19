@@ -1,9 +1,8 @@
 import { create } from 'zustand'
-import type { Howl } from 'howler'
 
 type audio = {
     id: string
-    audio: Howl
+    audio: HTMLAudioElement
 }
 
 type translation = {
@@ -11,6 +10,7 @@ type translation = {
     from_lang: string
     translation: string
     to_lang: string
+    audioUrl: string
     audio: audio
     text: string
 }
@@ -25,6 +25,8 @@ type translationStore = {
     setCurrentTranslation: (translation: translation | null) => void
     setCurrentAudio: (audio: audio | null) => void
     setLoading: (loading: boolean) => void
+    playAudio: (translation: translation) => void
+    stopAudio: (audio: HTMLAudioElement) => void
 }
 
 export const useTranslationStore = create<translationStore>((set) => ({
@@ -36,5 +38,23 @@ export const useTranslationStore = create<translationStore>((set) => ({
     setCurrentTranslation: (translation) => set(() => ({ currentTranslation: translation })),
     setCurrentAudio: (audio) => set(() => ({ currentAudio: audio })),
     setLoading: (loading) => set(() => ({ loading })),
-
+    playAudio: (translation) => {
+        const audio = new Audio(translation.audioUrl)
+        const audioObject = {
+            id: translation.id,
+            audio
+        }
+        set((state) => ({
+            allTranslations:
+                state.allTranslations.map(t => t.id === translation.id ? { ...t, audio: audioObject } : t) 
+            }
+        ))
+        audio.onplay = () => set(() => ({ currentAudio: audioObject }))
+        audio.onended = () => set(() => ({ currentAudio: null }))
+        audio.play()
+    },
+    stopAudio: (audio) => {
+        audio.pause()
+        set(() => ({ currentAudio: null }))
+    }
 }))
