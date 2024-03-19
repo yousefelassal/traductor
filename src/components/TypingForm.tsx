@@ -2,7 +2,9 @@ import { InferResponseType, InferRequestType } from 'hono/client'
 import { useTranslationStore } from '../../stores/translation'
 import { useMutation } from '@tanstack/react-query'
 import { client } from '../lib/utils'
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm } from "react-hook-form"
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 import { v4 as uuidv4 } from 'uuid'
 import {
   PaperAirplaneIcon,
@@ -19,22 +21,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+} from "@/components/ui/form"
+import { Input } from './ui/input'
 
-
-type Input = {
-    text: string | File
-    lang: string
-
-}
+const formSchema = z.object({
+  text: z.string(),
+  lang: z.string()
+})
 
 const TypingForm = () => {
-  const {
-      register,
-      handleSubmit,
-      formState: { isSubmitting },
-      reset,
-      getValues
-  } = useForm<Input>()
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      lang: 'es'
+    }
+  })
   const isSmallDevice = useMediaQuery('only screen and (max-width: 768px)')
   const { toggle } = useNavStore()
     
@@ -97,9 +103,9 @@ const TypingForm = () => {
                 translation: data.translation,
                 audio: audioObject,
                 audioUrl: url,
-                text: getValues().text as string
+                text: form.getValues().text as string
               }
-              reset( { text: '' } )
+              form.reset( { text: '' } )
               addTranslation(translation)
               setCurrentTranslation(translation)
               audio.onplay = () => {
@@ -117,7 +123,7 @@ const TypingForm = () => {
         },
       })
       
-    const onSubmit: SubmitHandler<Input> = (data) => {
+    const onSubmit = (data: z.infer<typeof formSchema>) => {
         translateMutation.mutate({
           text: data.text,
           lang: data.lang
@@ -125,21 +131,32 @@ const TypingForm = () => {
     }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="">
+    <Form {...form}>
+    <form onSubmit={form.handleSubmit(onSubmit)} className="">
         <div className="z-40 bg-gradient-to-tr from-slate-300/30 via-gray-400/30 to-slate-600/30 backdrop-blur-md rounded-lg border-purple-400/30 border px-4 lg:px-6 py-2 flex gap-2 md:justify-center fixed bottom-4 left-4 md:left-64 right-4 flex-wrap justify-stretch">
-            <input
-                type="text"
-                {...register("text", { required: true })}
-                placeholder="Enter text to translate"
-                className="rounded-3xl border shadow px-3 py-2 flex-1 bg-white/80 text-black border-black/10 focus:outline-none focus:ring-2 focus:ring-black/20 transition-all duration-200"
-            />
+          <FormField
+            control={form.control}
+            name="text"
+            render={({field}) => (
+              <FormItem className="flex-1">
+                <FormControl>
+                  <Input
+                    type="text"
+                    placeholder="Enter text to translate"
+                    className="rounded-3xl border w-full shadow px-3 py-2 flex-1 bg-white/80 text-black border-black/10 focus:outline-none focus:ring-2 focus:ring-black/20 transition-all duration-200"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
             <button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={form.formState.isSubmitting}
                 className="group rounded-full border shadow px-2 py-1 bg-white/80 hover:bg-black/20 transition-colors duration-200"
             >
               {loading ? <ArrowPathIcon className="w-6 h-6 animate-spin" /> : 
-                <PaperAirplaneIcon className="w-6 h-6 -rotate-90 group-hover:fill-white transition-all duration-200" />
+                <PaperAirplaneIcon className="w-6 h-6 -rotate-90 fill-purple-900/60 group-hover:fill-white transition-all duration-200" />
               }
             </button>
         </div>
@@ -154,29 +171,37 @@ const TypingForm = () => {
           )}
           <div className="flex items-center gap-2">
             <LanguageIcon className="w-6 h-6 text-white/90" />
-            <Select defaultValue='es'>
-            <SelectTrigger
-            {...register("lang", { required: true })}
-            className="rounded-md border shadow px-2 py-1 border-black/10"
-            >
-              <SelectValue placeholder="Select language"/>
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="es">Spanish</SelectItem>
-              <SelectItem value="en">English</SelectItem>
-              <SelectItem value="ru">Russian</SelectItem>
-              <SelectItem value="ar">Arabic</SelectItem>
-              <SelectItem value="fr">French</SelectItem>
-              <SelectItem value="it">Italian</SelectItem>
-              <SelectItem value="de">German</SelectItem>
-              <SelectItem value="pt">Portuguese</SelectItem>
-              <SelectItem value="ja">Japanese</SelectItem>
-              <SelectItem value="ko">Korean</SelectItem>
-            </SelectContent>
-            </Select>
+            <FormField
+              control={form.control}
+              name="lang"
+              render={({field}) => (
+                <FormItem>
+                  <Select defaultValue={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger
+                    className="rounded-md border shadow px-2 py-1 border-black/10"
+                  >
+                    <SelectValue placeholder="Select language"/>
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="es">Spanish</SelectItem>
+                    <SelectItem value="en">English</SelectItem>
+                    <SelectItem value="ru">Russian</SelectItem>
+                    <SelectItem value="ar">Arabic</SelectItem>
+                    <SelectItem value="fr">French</SelectItem>
+                    <SelectItem value="it">Italian</SelectItem>
+                    <SelectItem value="de">German</SelectItem>
+                    <SelectItem value="pt">Portuguese</SelectItem>
+                    <SelectItem value="ja">Japanese</SelectItem>
+                    <SelectItem value="ko">Korean</SelectItem>
+                  </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
           </div>
         </div>
     </form>
+  </Form>
   )
 }
 
