@@ -67,7 +67,7 @@ const Home = () => {
                     <button
                       onClick={() => {
                         setCurrentAudio(null)
-                        currentTranslation.audio.audio.pause()
+                        currentTranslation.audio.audio.stop()
                       }}
                       className="rounded-full z-10 font-medium text-lg px-4 py-1 gap-2 flex w-fit items-center justify-center border border-violet-400/30 shadow p-1 bg-white/50 hover:bg-white/60 transition-colors duration-200"
                     >
@@ -80,8 +80,7 @@ const Home = () => {
                     <button
                       onClick={() => {
                         setCurrentAudio(currentTranslation.audio)
-                        currentTranslation.audio.audio.currentTime = 0
-                        currentTranslation.audio.audio.onended = () => setCurrentAudio(null)
+                        currentTranslation.audio.audio.on('end', () => setCurrentAudio(null))
                         currentTranslation.audio.audio.play()
                       }}
                       className="rounded-full text-lg font-medium z-10 flex gap-2 w-fit items-center justify-center border border-violet-400/30 shadow px-4 py-1 bg-white/50 hover:bg-white/60 transition-colors duration-200"
