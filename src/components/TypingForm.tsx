@@ -146,7 +146,7 @@ const TypingForm = () => {
                   <Input
                     type="text"
                     placeholder="Enter text to translate"
-                    className="rounded-3xl border w-full shadow px-3 py-2 flex-1 bg-white/80 text-black border-black/10 focus:outline-none focus:ring-2 focus:ring-black/20 transition-all duration-200"
+                    className="rounded-3xl border text-[16px] w-full shadow px-3 py-2 flex-1 bg-white/80 text-black border-black/10 focus:outline-none focus:ring-2 focus:ring-black/20 transition-all duration-200"
                     {...field}
                   />
                 </FormControl>
