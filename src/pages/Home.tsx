@@ -5,6 +5,7 @@ import { BackgroundGradientAnimation } from '../components/ui/background-gradien
 import { convertLangToFlag, convertLangCode } from '../libs/utils'
 import ReactCountryFlag from 'react-country-flag'
 import { PauseIcon, PlayIcon } from '@heroicons/react/24/solid'
+import { TextGenerateEffect } from '../components/ui/text-generate-effect'
 
 const Home = () => {
   const {
@@ -13,7 +14,8 @@ const Home = () => {
     currentAudio,
     setCurrentAudio,
     playAudio,
-    stopAudio
+    stopAudio,
+    isPronouncing
   } = useTranslationStore()
 
   return (
@@ -62,9 +64,13 @@ const Home = () => {
                   </div>
                 </div>
                 <div className="flex flex-col gap-6 flex-1 items-center justify-center">
-                  <p className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75">
-                    {currentTranslation.translation}
-                  </p>
+                  {isPronouncing ? (
+                    <TextGenerateEffect words={currentTranslation.translation} />
+                  ) : (
+                    <p className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75">
+                      {currentTranslation.translation}
+                    </p>
+                  )}
                   {currentAudio?.id === currentTranslation.audio.id ? (
                     <button
                       onClick={() => stopAudio(currentAudio.audio)}
