@@ -37,7 +37,13 @@ const Sidebar = () => {
           </div>
         )}
         {allTranslations.length === 0 && (
-          <p className="text-center text-gray-400">No translations yet</p>
+          <div className="flex.flex-col.items-center.justify.center.gap-2">
+            <p className="text-center text-gray-400">No translations yet</p>
+            <img
+              src="https://utfs.io/f/5cd92b88-7e64-4595-9e5b-cf3523e6d86e-whm8p2.png"
+              alt="illustration knitted man learning new languages"
+            />
+          </div>
         )}
         {allTranslations.map((translation) => (
           <div
