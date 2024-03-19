@@ -1,8 +1,9 @@
 import { create } from 'zustand'
+import type { Howl } from 'howler'
 
 type audio = {
     id: string
-    audio: HTMLAudioElement
+    audio: Howl
 }
 
 type translation = {
