@@ -35,7 +35,8 @@ const TypingForm = () => {
         setCurrentTranslation,
         setCurrentAudio,
         loading,
-        setLoading
+        setLoading,
+        setIsPronouncing
     } = useTranslationStore()
     
     const $postTts = client.api.tts.$post
@@ -93,8 +94,14 @@ const TypingForm = () => {
               reset( { text: '' } )
               addTranslation(translation)
               setCurrentTranslation(translation)
-              audio.onplay = () => setCurrentAudio(audioObject)
-              audio.onended = () => setCurrentAudio(null)
+              audio.onplay = () => {
+                setCurrentAudio(audioObject)
+                setIsPronouncing(true)
+              }
+              audio.onended = () => {
+                setCurrentAudio(null)
+                setIsPronouncing(false)
+              }
               audio.play()
             },
             onSettled: () => setLoading(false)
