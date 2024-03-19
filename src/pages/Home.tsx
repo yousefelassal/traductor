@@ -69,7 +69,7 @@ const Home = () => {
                         setCurrentAudio(null)
                         currentTranslation.audio.audio.stop()
                       }}
-                      className="rounded-full z-10 font-medium text-lg px-4 py-1 gap-2 flex w-fit items-center justify-center border border-violet-400/30 shadow p-1 bg-white/50 hover:bg-white/60 transition-colors duration-200"
+                      className="rounded-full z-10 touch-manipulation font-medium text-lg px-4 py-1 gap-2 flex w-fit items-center justify-center border border-violet-400/30 shadow p-1 bg-white/50 hover:bg-white/60 transition-colors duration-200"
                     >
                       Stop
                       <PauseIcon className="w-6 h-6 fill-white/90" />
@@ -83,7 +83,7 @@ const Home = () => {
                         currentTranslation.audio.audio.on('end', () => setCurrentAudio(null))
                         currentTranslation.audio.audio.play()
                       }}
-                      className="rounded-full text-lg font-medium z-10 flex gap-2 w-fit items-center justify-center border border-violet-400/30 shadow px-4 py-1 bg-white/50 hover:bg-white/60 transition-colors duration-200"
+                      className="rounded-full touch-manipulation text-lg font-medium z-10 flex gap-2 w-fit items-center justify-center border border-violet-400/30 shadow px-4 py-1 bg-white/50 hover:bg-white/60 transition-colors duration-200"
                     >
                       Play
                       <PlayIcon className="w-6 h-6 fill-white/90" />
