@@ -25,7 +25,7 @@ const Sidebar = () => {
     <div className={cn("fixed md:sticky w-full inset-y-0 inset-x-0 md:inset-x-auto md:left-2 min-w-60 md:max-w-60 py-2 px-2 md:px-0 hidden z-50 md:block",
       isOpen ? "block" : "hidden",
     )}>
-        <div ref={animationParent} className="flex flex-col py-4 px-2 rounded-lg gap-1 bg-gradient-to-b from-slate-300/30 via-gray-400/30 to-slate-600/30 overflow-y-auto h-[calc(100vh-16px)] backdrop-blur-md border border-violet-400/30">
+        <div ref={animationParent} className="flex flex-col py-4 px-2 rounded-lg gap-1 bg-gradient-to-b from-slate-300/30 via-gray-400/30 to-slate-600/30 overflow-y-auto h-[calc(100dvh-16px)] backdrop-blur-md border border-violet-400/30">
         {isSmallDevice && (
           <div className="flex items-center -mt-1 px-2 pb-2">
             <button
