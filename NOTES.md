@@ -90,3 +90,14 @@ paste your entire env file in one secret named `ENV_FILE` and the just do `echo 
 - name: Create env file
   run: echo "${{ secrets.ENV_FILE }}" > .env
 ```
+
+### Skip workflow
+add if statement before steps to check if commit msgs for a skip flag (in this case '#skip')
+
+```yaml
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ''), '#skip') }}
+```
