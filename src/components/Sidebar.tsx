@@ -16,9 +16,9 @@ const Sidebar = () => {
   useEffect(() => {
     if (isSmallDevice) {
       if (isOpen) {
-        disableBodyScroll(document.body)
+        disableBodyScroll(document.body.getElementsByTagName('main')[0])
       } else {
-        enableBodyScroll(document.body)
+        enableBodyScroll(document.body.getElementsByTagName('main')[0])
       }
     }
   }, [isOpen, isSmallDevice])
