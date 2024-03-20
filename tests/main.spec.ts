@@ -1,18 +1,34 @@
 import { test, expect } from '@playwright/test';
 
-test('has title', async ({ page }) => {
+test.beforeEach(async ({ page }) => {
   await page.goto('http://127.0.0.1:8788/');
+});
 
+test('has title', async ({ page }) => {
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Traductor/);
 });
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test.describe('translation', () => {
+  test('ask for a translation', async ({ page }) => {
+    const newTranslation = page.getByPlaceholder('Enter text to translate');
+    await newTranslation.fill('hello');
+    await newTranslation.press('Enter');
+    
+    await page.waitForSelector('img[alt="translate illustration"]');
+    await page.waitForSelector('p:has-text("No translations yet")');
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
+    await expect(page.getByTestId('from-lang')).toHaveText('English');
+    await expect(page.getByTestId('from-text')).toHaveText('hello');
+    await expect(page.getByTestId('to-lang')).toHaveText('Spanish');
+    await expect(page.getByTestId('translated-text')).toHaveText('Hola');
+  })
+  test('should clear text input field when translation is done', async ({ page }) => {
+    const newTranslation = page.getByPlaceholder('Enter text to translate');
+    await newTranslation.fill('hello');
+    await newTranslation.press('Enter');
+    await page.waitForSelector('p:has-text("hola")');
+    await expect(newTranslation).toHaveText('');
+  })
+})
 
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
-});
