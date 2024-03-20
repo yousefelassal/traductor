@@ -107,7 +107,10 @@ const TypingForm = () => {
                 audioUrl: url,
                 text: form.getValues().text as string
               }
-              form.reset( { text: '' } )
+              form.reset({
+                text: '',
+                lang: form.getValues().lang
+              })
               addTranslation(translation)
               setCurrentTranslation(translation)
               audio.onplay = () => {
@@ -179,7 +182,7 @@ const TypingForm = () => {
               name="lang"
               render={({field}) => (
                 <FormItem>
-                  <Select defaultValue={field.value} onValueChange={field.onChange}>
+                  <Select defaultValue={field.value} onValueChange={field.onChange} {...field}>
                   <SelectTrigger
                     className="rounded-md border shadow px-2 py-1 border-black/10"
                   >
