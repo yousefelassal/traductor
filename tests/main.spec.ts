@@ -30,5 +30,18 @@ test.describe('translation', () => {
     await page.waitForSelector('p:has-text("hola")');
     await expect(newTranslation).toHaveText('');
   })
+  test('change language', async ({ page }) => {
+    const newTranslation = page.getByPlaceholder('Enter text to translate');
+    const select = page.locator('select');
+    await select.selectOption('fr');
+    await newTranslation.fill('hello');
+    await newTranslation.press('Enter');
+    await page.waitForSelector('p:has-text("bonjour")');
+
+    await expect(page.getByTestId('from-lang')).toHaveText('English');
+    await expect(page.getByTestId('from-text')).toHaveText('hello');
+    await expect(page.getByTestId('to-lang')).toHaveText('French');
+    await expect(page.getByTestId('translated-text')).toHaveText('Bonjour');
+  })
 })
 
