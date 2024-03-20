@@ -12,6 +12,7 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ''), '#skip') }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -36,18 +37,19 @@ jobs:
   deployment_pipeline:
     needs: [test]
     runs-on: ubuntu-20.04
+    if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ''), '#skip') }}
     steps:
         - uses: actions/checkout@v4
         - name: Trigger deployment
           env:
             deploy_hook: ${{ secrets.DEPLOY_HOOK }}
-          if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ''), '#skip') }}
           run: |
             curl -X POST "$deploy_hook"
     
   tag_release:
     needs: [deployment_pipeline]
     runs-on: ubuntu-20.04
+    if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ''), '#skip')}}
     permissions:
         contents: write
     steps:
@@ -55,7 +57,6 @@ jobs:
           with:
             fetch-depth: 0
         - name: Bumb version and push tag
-          if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ''), '#skip')}}
           env: 
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             DEFAULT_BUMP: 'patch'
