@@ -38,7 +38,10 @@ const Home = () => {
                 <div className="flex justify-between text-base">
                   <div className="flex items-center gap-2">
                     <div className="flex flex-col items-center">
-                      <p className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75">
+                      <p
+                        data-testid="from-lang"
+                        className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75"
+                      >
                         {convertLangCode(currentTranslation.from_lang)}
                       </p>
                       <ReactCountryFlag
@@ -50,12 +53,18 @@ const Home = () => {
                         From
                       </p>
                     </div>
-                    <p className="bg-clip-text text-xl text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75">
+                    <p
+                      data-testid="from-text"
+                      className="bg-clip-text text-xl text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75"
+                    >
                       {currentTranslation.text}
                     </p>
                   </div>
                   <div className="flex flex-col items-center">
-                    <p className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75">
+                    <p
+                      data-testid="to-lang"
+                      className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75"
+                    >
                       {convertLangCode(currentTranslation.to_lang)}
                     </p>
                     <ReactCountryFlag
@@ -72,7 +81,9 @@ const Home = () => {
                   {isPronouncing ? (
                     <TextGenerateEffect words={currentTranslation.translation} />
                   ) : (
-                    <p className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75">
+                    <p
+                      data-testid="translated-text"
+                      className="bg-clip-text text-transparent drop-shadow-2xl bg-gradient-to-br from-white/80 to-white/75">
                       {currentTranslation.translation}
                     </p>
                   )}
