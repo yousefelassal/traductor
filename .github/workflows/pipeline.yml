@@ -1,34 +1,58 @@
 name: Deployment pipeline
 
 on:
-    push:
-        branches:
-        - main
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-    deployment_pipeline:
-        runs-on: ubuntu-20.04
-        steps:
-            - uses: actions/checkout@v4
-            - name: Trigger deployment
-              env:
-                deploy_hook: ${{ secrets.DEPLOY_HOOK }}
-              if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ''), '#skip') }}
-              run: |
-                curl -X POST "$deploy_hook"
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    - name: Run Playwright tests
+      run: npx playwright test
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
+  deployment_pipeline:
+    needs: [test]
+    runs-on: ubuntu-20.04
+    steps:
+        - uses: actions/checkout@v4
+        - name: Trigger deployment
+          env:
+            deploy_hook: ${{ secrets.DEPLOY_HOOK }}
+          if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ''), '#skip') }}
+          run: |
+            curl -X POST "$deploy_hook"
     
-    tag_release:
-        needs: [deployment_pipeline]
-        runs-on: ubuntu-20.04
-        permissions:
-            contents: write
-        steps:
-            - uses: actions/checkout@v4
-              with:
-                fetch-depth: 0
-            - name: Bumb version and push tag
-              if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ''), '#skip')}}
-              env: 
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                DEFAULT_BUMP: 'patch'
-              uses: anothrNick/github-tag-action@1.67.0
+  tag_release:
+    needs: [deployment_pipeline]
+    runs-on: ubuntu-20.04
+    permissions:
+        contents: write
+    steps:
+        - uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
+        - name: Bumb version and push tag
+          if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ''), '#skip')}}
+          env: 
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            DEFAULT_BUMP: 'patch'
+          uses: anothrNick/github-tag-action@1.67.0
