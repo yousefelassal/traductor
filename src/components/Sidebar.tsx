@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { useTranslationStore } from '../../stores/translation'
 import { PauseIcon, PlayIcon, XMarkIcon } from '@heroicons/react/24/solid'
@@ -5,11 +6,22 @@ import { cn, convertLangToFlag } from '../lib/utils'
 import ReactCountryFlag from 'react-country-flag'
 import useNavStore from '../../stores/nav'
 import { useMediaQuery } from '@uidotdev/usehooks'
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 const Sidebar = () => {
   const [animationParent] = useAutoAnimate()
   const isSmallDevice = useMediaQuery('only screen and (max-width: 768px)')
   const { isOpen, toggle } = useNavStore()
+
+  useEffect(() => {
+    if (isSmallDevice) {
+      if (isOpen) {
+        disableBodyScroll(document.body)
+      } else {
+        enableBodyScroll(document.body)
+      }
+    }
+  }, [isOpen, isSmallDevice])
 
   const {
     allTranslations,
