@@ -21,7 +21,7 @@ const Home = () => {
 
   return (
     <BackgroundGradientAnimation>
-      <div className="relative min-h-screen w-screen flex">
+      <div className="relative min-h-[100dvh] w-screen flex">
         <Sidebar />
         <main className="py-20 flex text-white items-center justify-center w-full font-bold px-4 text-3xl text-center md:text-4xl">
           {currentTranslation ? (
