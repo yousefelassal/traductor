@@ -9,7 +9,8 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "deploy": "npm run build && wrangler pages deploy pages",
-    "prod": "wrangler pages dev --compatibility-flags=nodejs_compat --compatibility-date=2024-03-15 -- vite preview"
+    "prod": "wrangler pages dev --compatibility-flags=nodejs_compat --compatibility-date=2024-03-15 -- vite preview",
+    "start:test": "start-server-and-test prod http://localhost:8788 'npx playwright test'"
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.1",
