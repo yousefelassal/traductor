@@ -69,3 +69,16 @@ similar to a regular .env
 ```
 KEY=...
 ```
+
+## CI Workflow
+
+### Serve and Test ([start-server-and-test](https://github.com/bahmutov/start-server-and-test))
+
+
+```bash
+> start-server-and-test prod http://localhost:8788 'npx playwright test'
+
+1: starting server using command "npm run prod"
+and when url "[ 'http://localhost:8788' ]" is responding with HTTP status code 200
+running tests using command "npx playwright test"
+```
